@@ -2,7 +2,6 @@ package net.gaelixinfo.Journal.App.controller;
 
 import net.gaelixinfo.Journal.App.entity.JournalEntry;
 import net.gaelixinfo.Journal.App.service.JournalEntryService;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
