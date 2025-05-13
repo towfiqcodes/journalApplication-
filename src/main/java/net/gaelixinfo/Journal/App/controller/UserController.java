@@ -4,6 +4,7 @@ package net.gaelixinfo.Journal.App.controller;
 import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,16 +28,16 @@ public class UserController {
         userService.saveEntry(user);
     }
 
-    @PutMapping
-    public ResponseEntity<?> getUserById(@RequestParam User user) {
-       User userInDb= userService.findByUserName(user.getUsername());
+
+    @PutMapping("/{username}")
+    public ResponseEntity<?> updateUser(@PathVariable  String username,@RequestParam User user) {
+       User userInDb= userService.findByUserName(username);
        if(userInDb!=null) {
             userInDb.setUsername(user.getUsername());
             userInDb.setPassword(user.getPassword());
             userService.saveEntry(userInDb);
-            return ResponseEntity.ok(userInDb);
        }
-       return ResponseEntity.notFound().build();
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
