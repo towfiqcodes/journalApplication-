@@ -1,12 +1,11 @@
 package net.gaelixinfo.Journal.App.repository;
 
-import net.gaelixinfo.Journal.App.entity.JournalEntry;
+import net.gaelixinfo.Journal.App.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JournalEntryRepo extends MongoRepository<JournalEntry, ObjectId> {
-
-
+public interface UserRepo extends MongoRepository<User, ObjectId> {
+    User findByUsername(String username);
 }

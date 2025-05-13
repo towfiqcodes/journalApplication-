@@ -1,33 +1,36 @@
 package net.gaelixinfo.Journal.App.controller;
 
 import net.gaelixinfo.Journal.App.entity.JournalEntry;
+import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.JournalEntryService;
+import net.gaelixinfo.Journal.App.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Key;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/journal")
-public class JournalEntryControllerV2 {
+public class JournalEntryController {
+    @Autowired
+ private  JournalEntryService journalEntryService;
 
-  JournalEntryService journalEntryService;
-  @Autowired
-  public JournalEntryControllerV2(JournalEntryService journalEntryService) {
-    this.journalEntryService = journalEntryService;
-  }
+    @Autowired
+    private UserService userService;
 
 
-  @GetMapping()
-  public ResponseEntity<?> getAll() {
-    List<JournalEntry> all=journalEntryService.getAllEntries();
+
+
+  @GetMapping("{username}")
+  public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String username) {
+      User user = userService.findByUserName(username);
+      List<JournalEntry> all=user.getJournalEntries();
     if (all !=null && !all.isEmpty()) {
       return new ResponseEntity<>(all, HttpStatus.OK);
     }
@@ -35,11 +38,12 @@ public class JournalEntryControllerV2 {
     }
 
 
-    @PostMapping()
-    public ResponseEntity<JournalEntry> createJournalEntry(@RequestBody JournalEntry journalEntry) {
+    @PostMapping("{username}")
+    public ResponseEntity<JournalEntry> createJournalEntry(@RequestBody JournalEntry journalEntry,  @PathVariable String username) {
     try {
-      journalEntry.setDate(LocalDateTime.now());
-      journalEntryService.saveEntry(journalEntry);
+
+//      journalEntry.setDate(LocalDateTime.now());
+      journalEntryService.saveEntry(journalEntry,username);
       return new  ResponseEntity<>(journalEntry, HttpStatus.CREATED);
     }catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,23 +57,22 @@ public class JournalEntryControllerV2 {
     @GetMapping("id/{myId}")
     public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId) {
       Optional<JournalEntry> journalEntry= journalEntryService.getJournalEntryById(myId) ;
-      if (journalEntry.isPresent()) {
-        return new ResponseEntity<>(journalEntry.get(),HttpStatus.OK);
-      }
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return journalEntry.map(entry -> new ResponseEntity<>(entry, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteJournalEntry(@PathVariable ObjectId myId) {
-       journalEntryService.deleteJournalEntryById(myId);
+    @DeleteMapping("id/{username}/{myId}")
+    public ResponseEntity<?> deleteJournalEntry(@PathVariable ObjectId myId,  @PathVariable String username) {
+       journalEntryService.deleteJournalEntryById(myId,username);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("id/{id}")
-    public ResponseEntity<?> updateJournalEntry(@PathVariable ObjectId id, @RequestBody JournalEntry newJournalEntry) {
+    @PutMapping("id/{username}/{id}")
+    public ResponseEntity<?> updateJournalEntry(@PathVariable ObjectId id,
+                                                @RequestBody JournalEntry newJournalEntry,
+                                                @PathVariable String username) {
      JournalEntry oldJournalEntry = journalEntryService.getJournalEntryById(id).orElse(null);
      if (oldJournalEntry != null) {
-       oldJournalEntry.setTitle( newJournalEntry.getTitle()!=null && !newJournalEntry.getTitle().isEmpty()
+       oldJournalEntry.setTitle(!newJournalEntry.getTitle().isEmpty()
                ? newJournalEntry.getTitle()
                : oldJournalEntry.getTitle()
        );
