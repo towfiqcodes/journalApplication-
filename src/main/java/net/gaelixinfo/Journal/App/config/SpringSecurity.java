@@ -24,15 +24,14 @@ public class SpringSecurity  {
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
 
-
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/journal/**", "/user/**").authenticated().anyRequest()
+                        .requestMatchers("/journal/**", "/user/**").authenticated()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .anyRequest()
                         .permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())

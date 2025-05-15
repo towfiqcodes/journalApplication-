@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles().stream().map(role -> new SimpleGrantedAuthority("USER" + role)).toList()
+                user.getRoles().stream().map(SimpleGrantedAuthority::new).toList()
         );
     }
 
