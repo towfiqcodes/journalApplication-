@@ -1,15 +1,14 @@
 package net.gaelixinfo.Journal.App.service;
 
 import lombok.extern.slf4j.Slf4j;
-import net.gaelixinfo.Journal.App.entity.JournalEntry;
 import net.gaelixinfo.Journal.App.entity.User;
-import net.gaelixinfo.Journal.App.repository.JournalEntryRepo;
 import net.gaelixinfo.Journal.App.repository.UserRepo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,20 @@ public class UserService {
     private  UserRepo userRepo;
 
 
-    public void saveEntry(User user) {
+    private final static PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+
+    public void saveNewUser(User user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("USER"));
+            userRepo.save(user);
+        }catch (Exception e) {
+            log.error("Error while saving JournalEntry", e);
+        }
+
+    }
+
+    public void saveUser(User user) {
         try {
             userRepo.save(user);
         }catch (Exception e) {
@@ -41,6 +53,10 @@ public class UserService {
 
     public void deleteUserById(ObjectId id) {
          userRepo.deleteById(id);
+    }
+
+    public void deleteByUserName(String username) {
+        userRepo.deleteByUsername(username);
     }
 
     public User findByUserName(String userName) {
