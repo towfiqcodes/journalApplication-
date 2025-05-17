@@ -10,4 +10,7 @@ public interface UserRepo extends MongoRepository<User, ObjectId> {
     User findByUsername(String username);
 
     User deleteByUsername(String username);
+
+
+
 }
