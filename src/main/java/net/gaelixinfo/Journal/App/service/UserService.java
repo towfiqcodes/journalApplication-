@@ -29,7 +29,7 @@ public class UserService {
             user.setRoles(List.of("USER"));
             userRepo.save(user);
         }catch (Exception e) {
-            log.error("Error while saving JournalEntry", e);
+            log.error("Error while saving  {} ",user.getUsername() + e);
         }
 
     }
@@ -38,7 +38,8 @@ public class UserService {
         try {
             userRepo.save(user);
         }catch (Exception e) {
-            log.error("Error while saving JournalEntry", e);
+          //  log.error("Error while saving JournalEntry", e);
+            log.warn(e.getMessage());
         }
 
     }
