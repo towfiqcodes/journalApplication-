@@ -1,8 +1,10 @@
 package net.gaelixinfo.Journal.App.controller;
 
 
+import net.gaelixinfo.Journal.App.api.response.WeatherResponse;
 import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.UserService;
+import net.gaelixinfo.Journal.App.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private WeatherService weatherService;
 
 
 
@@ -52,6 +56,17 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userService.deleteByUserName(authentication.getName());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getUserByUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Dhaka");
+        String greetings="";
+        if (weatherResponse!=null) {
+           greetings= "Weather feels like " + weatherResponse.getCurrent().getFeelsLike();
+        }
+        return ResponseEntity.ok("HI "+authentication.getName() + greetings);
     }
 
 }
