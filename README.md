@@ -51,4 +51,15 @@ Disadvantages of HATEOAS
  3. Low Adoption 
 
 
+Java Garbage Collector
+
+* Java garbage collection is an automatic process that manages memory in the heap.
+* It identifies which objects are still in use (referenced) and which are not in use (unreferenced).
+* It removes the objects that are unreachable (no longer referenced).
+	•	The programmer does not need to mark objects to be deleted explicitly. The garbage collection implementation lives in the JVM. 
+
+Types of Activities in Java Garbage Collection
+Two types of garbage collection activities usually happen in Java. These are:
+1. Minor or incremental Garbage Collection (GC): This occurs when unreachable objects in the Young Generation heap memory are removed.
+2. Major or Full Garbage Collection (GC): This happens when objects that survived minor garbage collection are removed from the Old Generation heap memory. It occurs less frequently than minor garbage collection.
 
