@@ -63,3 +63,23 @@ Two types of garbage collection activities usually happen in Java. These are:
 1. Minor or incremental Garbage Collection (GC): This occurs when unreachable objects in the Young Generation heap memory are removed.
 2. Major or Full Garbage Collection (GC): This happens when objects that survived minor garbage collection are removed from the Old Generation heap memory. It occurs less frequently than minor garbage collection.
 
+
+JPA/Hibernate Advanced
+
+ORM-> Object Relational Mapping 
+Object-Relational Mapping (ORM) is the process of converting Java objects to database tables. 
+In other words, this allows us to interact with a relational database without any SQL.
+
+JPA-> Java Persistence API
+The Java Persistence API (JPA) is a specification that defines how to persist data in Java applications. 
+The primary focus of JPA is the ORM layer.
+
+
+Hibernate
+
+ Configuration, Session , SessionFactory  Transaction ;
+
+Details of the session, 
+configuration, 
+sessionFactory->  heavy weight object , loose lot of resources , if forget to close it , it auto close , 
+Transaction-> only use for save, update data into DB;
