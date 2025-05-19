@@ -83,3 +83,28 @@ Details of the session,
 configuration, 
 sessionFactory->  heavy weight object , loose lot of resources , if forget to close it , it auto close , 
 Transaction-> only use for save, update data into DB;
+
+
+Redis
+
+Redis (short for Remote Dictionary Server) is an open-source, in-memory data store used as a database, cache, and message broker. It's known for being blazing fast and is widely used to speed up applications by storing frequently accessed data in memory.
+
+Key Features
+Feature	Description
+In-memory	Data is stored in RAM, enabling sub-millisecond access times.
+Key-Value Store	Stores data as key–value pairs (like a map or dictionary).
+Persistence	Can persist data to disk via snapshots or append-only files.
+Data Structures	Supports strings, lists, sets, hashes, sorted sets, bitmaps, and more.
+Pub/Sub	Built-in messaging system for real-time apps.
+Atomic Operations	Many operations are atomic by default, useful for counters, etc.
+Replication	Master-slave replication for high availability.
+Cluster Support	Horizontally scalable via clustering.
+
+Common Use Cases
+* Caching (e.g., user sessions, API responses)
+* Leaderboard or counter systems (via sorted sets or atomic increment)
+* Real-time analytics
+* Pub/Sub messaging
+* Rate limiting
+* Queue systems (like job/task queues)
+
