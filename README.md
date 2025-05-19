@@ -43,4 +43,12 @@ III. Endpoints ->
 IV. Responses 
 V. Exceptions
 VI. Versioning
-VII. HATEOA
+VII. HATEOAS-> Hypermedia As The Engine Of Application State
+ 
+Disadvantages of HATEOAS
+ 1.  Performance cost
+ 2. No Accepted Standerd
+ 3. Low Adoption 
+
+
+
