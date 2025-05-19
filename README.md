@@ -1,4 +1,4 @@
-Journal Application using Spring boot, hibernate,kafka, Redis, mongoDb and Spring security 
+Journal Application using Spring boot, hibernate,kafka, Redis, mongoDb and Spring security, JWT 
 
 
 Rest API Best Practices
