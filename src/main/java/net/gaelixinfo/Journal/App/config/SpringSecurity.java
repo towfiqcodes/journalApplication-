@@ -44,7 +44,6 @@ public class SpringSecurity  {
         return http.build();
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
