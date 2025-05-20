@@ -23,13 +23,15 @@ public class UserService {
 
     private final static PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
-    public void saveNewUser(User user) {
+    public Boolean saveNewUser(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(List.of("USER"));
             userRepo.save(user);
+            return true;
         }catch (Exception e) {
             log.error("Error while saving JournalEntry", e);
+            return false;
         }
 
     }
