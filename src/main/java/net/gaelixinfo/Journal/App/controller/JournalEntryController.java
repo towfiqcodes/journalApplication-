@@ -1,5 +1,7 @@
 package net.gaelixinfo.Journal.App.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.gaelixinfo.Journal.App.entity.JournalEntry;
 import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.JournalEntryService;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Tag(name = "Journal APIs")
 public class JournalEntryController {
     @Autowired
  private  JournalEntryService journalEntryService;
@@ -31,6 +34,7 @@ public class JournalEntryController {
 
 
   @GetMapping()
+  @Operation(summary = "Get All journal entries of a user")
   public ResponseEntity<?> getAllJournalEntriesOfUser() {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       User user = userService.findByUserName(authentication.getName());
@@ -43,6 +47,7 @@ public class JournalEntryController {
 
 
     @PostMapping()
+    @Operation(summary = "Create Journal entry")
     public ResponseEntity<JournalEntry> createJournalEntry(@RequestBody JournalEntry journalEntry) {
     try {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

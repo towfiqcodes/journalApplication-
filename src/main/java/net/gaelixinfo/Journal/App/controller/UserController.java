@@ -1,6 +1,7 @@
 package net.gaelixinfo.Journal.App.controller;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.gaelixinfo.Journal.App.api.response.WeatherResponse;
 import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs", description = "Read , Update & Delete User")
 public class UserController {
 
     @Autowired

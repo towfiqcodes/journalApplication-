@@ -1,5 +1,6 @@
 package net.gaelixinfo.Journal.App.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.gaelixinfo.Journal.App.entity.TodoEntity;
 import net.gaelixinfo.Journal.App.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @RestController()
 @RequestMapping("/todo")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "TODO APIs")
 public class TodoController {
 
     @Autowired

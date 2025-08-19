@@ -1,5 +1,6 @@
 package net.gaelixinfo.Journal.App.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.gaelixinfo.Journal.App.cache.AppCache;
 import net.gaelixinfo.Journal.App.entity.User;
 import net.gaelixinfo.Journal.App.service.UserService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@Tag(name = "Admin APIs")
 public class AdminController {
 
     @Autowired
